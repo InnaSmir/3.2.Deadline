@@ -2,6 +2,7 @@ package ru.netology.page;
 
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
+import org.openqa.selenium.Keys;
 import ru.netology.data.DataHelper;
 
 import static com.codeborne.selenide.Selenide.$;
@@ -20,5 +21,10 @@ public class LoginPage {
 
     public SelenideElement showErrorMessage() {
         return $(".notification").shouldHave(Condition.text("Ошибка! Неверно указан логин или пароль"));
+    }
+
+    public void clearFields() {
+        loginInput.doubleClick().sendKeys(Keys.BACK_SPACE);
+        passwordInput.doubleClick().sendKeys(Keys.BACK_SPACE);
     }
 }

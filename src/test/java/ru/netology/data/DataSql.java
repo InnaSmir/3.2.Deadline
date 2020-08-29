@@ -17,8 +17,7 @@ public class DataSql {
 
         try (
                 val conn = DriverManager.getConnection(
-                        "jdbc:mysql://localhost:3306/app", "app", "pass"
-                );
+                        "jdbc:mysql://localhost:3306/app", "app", "pass")
         ) {
             user =  runner.query(conn, dataSQL, new ScalarHandler<>());
 
@@ -38,7 +37,7 @@ public class DataSql {
         try (
                 val conn = DriverManager.getConnection(
                         "jdbc:mysql://localhost:3306/app", "app", "pass"
-                );
+                )
         ) {
             runner.execute(conn, cleanAuth_Codes);
             runner.execute(conn, cleanUsers);
@@ -56,7 +55,7 @@ public class DataSql {
         try (
                 val conn = DriverManager.getConnection(
                         "jdbc:mysql://localhost:3306/app", "app", "pass"
-                );
+                )
         ) {
             code =  runner.query(conn, selectSQL, new ScalarHandler<>());
         }
@@ -66,4 +65,42 @@ public class DataSql {
         return code;
     }
 
+
+    public static String getUserStatus(String login){
+        val selectSQL = "SELECT status FROM users WHERE login = ?;";
+        val runner = new QueryRunner();
+        String status = null;
+
+        try (
+                val conn = DriverManager.getConnection(
+                        "jdbc:mysql://localhost:3306/app", "app", "pass"
+
+                );
+        ) {
+            status = runner.query(conn, selectSQL, new ScalarHandler<>(), login);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return status;
+    }
+
+    public static void cleanData(){
+        val runner = new QueryRunner();
+        val cleanUsers = "DELETE FROM users;";
+        val cleanCards = "DELETE FROM cards;";
+        val cleanAuth_Codes = "DELETE FROM auth_codes;";
+        val cleanCard_Transactions = "DELETE FROM card_transactions;";
+        try (
+                val conn = DriverManager.getConnection(
+                        "jdbc:mysql://localhost:3306/app", "app", "pass"
+                );
+        ) {
+            runner.execute(conn, cleanCards);
+            runner.execute(conn, cleanAuth_Codes);
+            runner.execute(conn, cleanUsers);
+            runner.execute(conn, cleanCard_Transactions);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
 }

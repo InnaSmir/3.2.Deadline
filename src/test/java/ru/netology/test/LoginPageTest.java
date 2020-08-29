@@ -10,6 +10,7 @@ import ru.netology.page.LoginPage;
 
 import static com.codeborne.selenide.Selenide.open;
 import static com.codeborne.selenide.Selenide.sleep;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class LoginPageTest {
 
@@ -17,7 +18,7 @@ public class LoginPageTest {
 
     @BeforeEach
     void setup() {
-        open("http://localhost:7777", LoginPage.class);
+        loginPage = open("http://localhost:7777", LoginPage.class);
     }
 
     @Test
@@ -31,10 +32,30 @@ public class LoginPageTest {
 
     @Test
     void shouldLoginUser() {
-        val authInfo = DataHelper.getAuthorizationInfo();
-        val verificationPage = loginPage.validLogin(authInfo);
+        val AuthorizationInfo = DataHelper.getAuthorizationInfo();
+        val verificationPage = loginPage.validLogin(AuthorizationInfo);
         val verificationCode = DataSql.getVerificationCode();
         verificationPage.validVerify(verificationCode);
+    }
+
+
+    @Test
+    void shouldBlockedIfLoginWithWrongPasswordThreeTime() {
+        val AuthorizationInfo = DataHelper.getUserWithWrongPassword();
+        loginPage.validLogin(AuthorizationInfo);
+        loginPage.showErrorMessage();
+        loginPage.clearFields();
+        loginPage.validLogin(AuthorizationInfo);
+        loginPage.showErrorMessage();
+        loginPage.clearFields();
+        loginPage.validLogin(AuthorizationInfo);
+        val status = DataSql.getUserStatus(AuthorizationInfo.getLogin());
+        assertEquals("blocked", status);
+    }
+
+    @AfterAll
+    static void cleanTables() {
+        DataSql.cleanData();
     }
 
 }
