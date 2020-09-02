@@ -8,7 +8,7 @@
 ## Установка и запуск
 
 * Запустить контейнер в командной строке с помощью команды - `doker-compose up`
-* Запустить приложение в командной строке app-deadline.jar с помощью команды `java -jar ./artifacts/app-deadline.jar -P:jdbc.url=jdbc:mysql://localhost:3306/app -P:jdbc.user=app -P:jdbc.password=pass`
+* Запустить приложение в командной строке app-deadline.jar с помощью команды `java -jar ./artifacts/app-deadline.jar -P:jdbc.url=jdbc:mysql://localhost:3306/app -P:jdbc.user=app -P:jdbc.password=pass -port=7777`
 * Запустить автотесты 
 * При повторном запуске тестов, необходимо перезапустить приложение app-deadline.jar
 
