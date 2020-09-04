@@ -10,8 +10,8 @@ public class DataHelper {
 
     @Value
     public static class AuthorizationInfo {
-        private String login;
-        private String password;
+        String login;
+        String password;
     }
 
     public static AuthorizationInfo getAuthorizationInfo() {
@@ -24,7 +24,7 @@ public class DataHelper {
 
     @Value
     public static class VerificationCode {
-        private String verificationCode;
+        String verificationCode;
     }
 
 

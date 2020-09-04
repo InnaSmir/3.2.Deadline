@@ -75,7 +75,7 @@ public class DataSql {
                 val conn = DriverManager.getConnection(
                         "jdbc:mysql://localhost:3306/app", "app", "pass"
 
-                );
+                )
         ) {
             status = runner.query(conn, selectSQL, new ScalarHandler<>(), login);
         } catch (SQLException throwables) {
@@ -93,7 +93,7 @@ public class DataSql {
         try (
                 val conn = DriverManager.getConnection(
                         "jdbc:mysql://localhost:3306/app", "app", "pass"
-                );
+                )
         ) {
             runner.execute(conn, cleanCards);
             runner.execute(conn, cleanAuth_Codes);

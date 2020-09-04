@@ -18,6 +18,7 @@ public class LoginPageTest {
 
     @BeforeEach
     void setup() {
+
         loginPage = open("http://localhost:7777", LoginPage.class);
     }
 
@@ -38,17 +39,17 @@ public class LoginPageTest {
         verificationPage.validVerify(verificationCode);
     }
 
-
     @Test
     void shouldBlockedIfLoginWithWrongPasswordThreeTime() {
         val AuthorizationInfo = DataHelper.getUserWithWrongPassword();
-        loginPage.validLogin(AuthorizationInfo);
+        loginPage.login(AuthorizationInfo);
         loginPage.showErrorMessage();
         loginPage.clearFields();
-        loginPage.validLogin(AuthorizationInfo);
+        loginPage.login(AuthorizationInfo);
         loginPage.showErrorMessage();
         loginPage.clearFields();
-        loginPage.validLogin(AuthorizationInfo);
+        loginPage.login(AuthorizationInfo);
+        loginPage.showErrorMessage();
         val status = DataSql.getUserStatus(AuthorizationInfo.getLogin());
         assertEquals("blocked", status);
     }

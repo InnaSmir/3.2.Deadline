@@ -6,9 +6,9 @@ import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Condition.visible;
 
 public class DashboardPage {
-    private SelenideElement dashboard = $("[data-test-id=dashboard]");
 
     public DashboardPage() {
+        SelenideElement dashboard = $("[data-test-id=dashboard]");
         dashboard.shouldBe(visible);
     }
 }
